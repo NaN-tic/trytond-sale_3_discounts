@@ -1,0 +1,19 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:sale.line,discount1:"
+msgid "Discount 1"
+msgstr "Descompte 1"
+
+msgctxt "field:sale.line,discount2:"
+msgid "Discount 2"
+msgstr "Descompte 2"
+
+msgctxt "field:sale.line,discount3:"
+msgid "Discount 3"
+msgstr "Descompte 3"
+
+msgctxt "view:sale.line:"
+msgid "%"
+msgstr "%"
