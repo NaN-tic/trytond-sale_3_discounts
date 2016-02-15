@@ -88,3 +88,10 @@ class SaleLine:
             line.discount2 = self.discount2
             line.discount3 = self.discount3
         return lines
+
+    def _fill_line_from_kit_line(self, kit_line, line, depth):
+        'Inherited from sale_kit'
+        self.discount1 = _ZERO
+        self.discount2 = _ZERO
+        self.discount3 = _ZERO
+        super(SaleLine, self)._fill_line_from_kit_line(kit_line, line, depth)
