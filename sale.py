@@ -17,7 +17,11 @@ STATES = {
     'invisible': Eval('type') != 'line',
     'required': Eval('type') == 'line',
     }
-DEPENDS = ['type']
+# Important to add 'discount' in DEPENDS so a view can be created with only
+# discounts 1, 2 & 3, and 'discount' will be loaded too. Otherwise it will not
+# work correctly unless the person who creates the view adds 'discount'
+# manually.
+DEPENDS = ['type', 'discount']
 
 
 class SaleLine:
