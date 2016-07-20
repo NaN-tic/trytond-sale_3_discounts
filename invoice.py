@@ -1,3 +1,6 @@
+# The COPYRIGHT file at the top level of this repository contains
+# the full copyright notices and license terms.
+from decimal imort Decimal
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval
@@ -50,20 +53,21 @@ class InvoiceLine:
         discount3 = self.discount3 or Decimal(0)
         self.discount = 1 - ((1 - discount1) * (1 - discount2) * (1 -
                 discount3))
-        digits = self.__class__.discount.digits[1]                   
+        digits = self.__class__.discount.digits[1]
         self.discount = self.discount.quantize(Decimal(str(10.0 ** -digits)))
-        res = super(InvoiceLine, self).update_prices()
-        res['discount'] = self.discount
-        return res
+        super(InvoiceLine, self).update_prices()
 
-    @fields.depends('discount1', 'discount2', 'discount3', methods=['discount'])
+    @fields.depends('discount1', 'discount2', 'discount3',
+        methods=['discount'])
     def on_change_discount1(self):
-        return self.update_prices()
+        self.update_prices()
 
-    @fields.depends('discount1', 'discount2', 'discount3', methods=['discount'])
+    @fields.depends('discount1', 'discount2', 'discount3',
+        methods=['discount'])
     def on_change_discount2(self):
-        return self.update_prices()
+        self.update_prices()
 
-    @fields.depends('discount1', 'discount2', 'discount3', methods=['discount'])
+    @fields.depends('discount1', 'discount2', 'discount3',
+        methods=['discount'])
     def on_change_discount3(self):
-        return self.update_prices()
+        self.update_prices()
