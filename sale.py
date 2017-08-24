@@ -54,9 +54,14 @@ class SaleLine:
         return 0
 
     def update_prices(self):
-        discount1 = self.discount1 or _ZERO
-        discount2 = self.discount2 or _ZERO
-        discount3 = self.discount3 or _ZERO
+        # Use getattr because if the update_prices function is called by code
+        # and the line assocaited is create by code too, it dose not have all
+        # fields in the browse. E.g.: in sale_shipment_cost when called
+        # get_shipment_cost_line i call an on_change_product after create a
+        # line, and on_change_product call update_proces.
+        discount1 = getattr(self, 'discount1', _ZERO)
+        discount2 = getattr(self, 'discount2', _ZERO)
+        discount3 = getattr(self, 'discount3', _ZERO)
         self.discount = 1 - ((1 - discount1) * (1 - discount2) * (1 -
                 discount3))
         digits = self.__class__.discount.digits[1]
