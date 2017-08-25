@@ -62,8 +62,8 @@ class SaleLine:
         discount1 = getattr(self, 'discount1', _ZERO)
         discount2 = getattr(self, 'discount2', _ZERO)
         discount3 = getattr(self, 'discount3', _ZERO)
-        self.discount = 1 - ((1 - discount1) * (1 - discount2) * (1 -
-                discount3))
+        self.discount = Decimal(1 - ((1 - discount1) * (1 - discount2) * (1 -
+                discount3)))
         digits = self.__class__.discount.digits[1]
         self.discount = self.discount.quantize(Decimal(str(10.0 ** -digits)))
         super(SaleLine, self).update_prices()
