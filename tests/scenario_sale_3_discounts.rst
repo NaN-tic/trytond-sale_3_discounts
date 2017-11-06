@@ -184,6 +184,8 @@ Sale 5 products::
     Decimal('1836.00')
     >>> sale.save()
     >>> sale.reload()
+    >>> sale_line.discount == Decimal('0.6175')
+    True
     >>> sale.total_amount
     Decimal('1836.00')
     >>> Sale.quote([sale.id], config.context)
