@@ -10,7 +10,6 @@ DISCOUNT_DIGITS = (16, config.getint('product', 'price_decimal', default=4))
 _ZERO = Decimal(0)
 
 __all__ = ['SaleLine']
-__metaclass__ = PoolMeta
 
 STATES = {
     'invisible': Eval('type') != 'line',
@@ -69,17 +68,17 @@ class SaleLine:
         super(SaleLine, self).update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3',
-        '_parent_sale.sale_discount', methods=['discount'])
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount')
     def on_change_discount1(self):
         self.update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3',
-        '_parent_sale.sale_discount', methods=['discount'])
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount')
     def on_change_discount2(self):
         self.update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3',
-        '_parent_sale.sale_discount', methods=['discount'])
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount')
     def on_change_discount3(self):
         self.update_prices()
 
