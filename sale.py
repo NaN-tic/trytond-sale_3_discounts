@@ -18,9 +18,8 @@ STATES = {
 DEPENDS = ['type']
 
 
-class SaleLine:
+class SaleLine(metaclass=PoolMeta):
     __name__ = 'sale.line'
-    __metaclass__ = PoolMeta
     discount1 = fields.Numeric('Discount 1', digits=DISCOUNT_DIGITS,
         states=STATES, depends=DEPENDS)
     discount2 = fields.Numeric('Discount 2', digits=DISCOUNT_DIGITS,
