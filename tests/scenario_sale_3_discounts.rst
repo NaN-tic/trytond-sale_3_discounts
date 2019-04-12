@@ -187,9 +187,8 @@ Sale 5 products::
     True
     >>> sale.total_amount
     Decimal('1836.00')
-    >>> Sale.quote([sale.id], config.context)
-    >>> Sale.confirm([sale.id], config.context)
-    >>> Sale.process([sale.id], config.context)
+    >>> sale.click('quote')
+    >>> sale.click('confirm')
     >>> sale.state
     'processing'
     >>> sale.reload()
