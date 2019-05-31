@@ -9,13 +9,22 @@ from trytond.config import config
 DISCOUNT_DIGITS = (16, config.getint('product', 'price_decimal', default=4))
 _ZERO = Decimal(0)
 
-__all__ = ['SaleLine']
+__all__ = ['SaleLine', 'Move']
 
 STATES = {
     'invisible': Eval('type') != 'line',
     'required': Eval('type') == 'line',
     }
 DEPENDS = ['type']
+
+class Move(metaclass=PoolMeta):
+    __name__ = 'stock.move'
+    discount1 = fields.Numeric('Discount 1', digits=DISCOUNT_DIGITS,
+        readonly=True)
+    discount2 = fields.Numeric('Discount 2', digits=DISCOUNT_DIGITS,
+        readonly=True)
+    discount3 = fields.Numeric('Discount 3', digits=DISCOUNT_DIGITS,
+        readonly=True)
 
 
 class SaleLine(metaclass=PoolMeta):
@@ -50,6 +59,14 @@ class SaleLine(metaclass=PoolMeta):
     @staticmethod
     def default_discount3():
         return 0
+
+    def get_move(self, shipment_type):
+        move = super(SaleLine, self).get_move(shipment_type)
+        if move:
+            move.discount1 = self.discount1
+            move.discount2 = self.discount2
+            move.discount3 = self.discount3
+        return move
 
     def update_prices(self):
         # Use getattr because if the update_prices function is called by code
