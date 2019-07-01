@@ -14,8 +14,9 @@ __all__ = ['SaleLine', 'Move']
 STATES = {
     'invisible': Eval('type') != 'line',
     'required': Eval('type') == 'line',
+    'readonly': Eval('sale_state') != 'draft',
     }
-DEPENDS = ['type']
+DEPENDS = ['type', 'sale_state']
 
 class Move(metaclass=PoolMeta):
     __name__ = 'stock.move'
