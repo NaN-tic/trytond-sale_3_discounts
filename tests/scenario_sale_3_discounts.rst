@@ -169,11 +169,17 @@ Sale 5 products::
     >>> sale_line.discount3 = Decimal('.1')
     >>> sale_line.unit_price
     Decimal('76.50000000')
-    >>> sale_line.amount
-    Decimal('1836.00')
     >>> sale.save()
     >>> sale.reload()
-    >>> sale_line.discount == Decimal('0.6175')
+
+Check sale and invoice discounts::
+
+    >>> line, = sale.lines
+    >>> line.gross_unit_price == Decimal('200')
+    True
+    >>> line.discount == Decimal('0.6175')
+    True
+    >>> line.amount == Decimal('1836.00')
     True
     >>> sale.total_amount
     Decimal('1836.00')
@@ -183,12 +189,12 @@ Sale 5 products::
     'processing'
     >>> sale.reload()
     >>> invoice, = sale.invoices
-    >>> invoice.total_amount
-    Decimal('1836.00')
+    >>> invoice.total_amount == Decimal('1836.00')
+    True
     >>> invoice_line, = invoice.lines
-    >>> invoice_line.discount1
-    Decimal('0.5')
-    >>> invoice_line.discount2
-    Decimal('0.15')
-    >>> invoice_line.discount3
-    Decimal('0.1')
+    >>> invoice_line.discount1 == Decimal('0.5')
+    True
+    >>> invoice_line.discount2 == Decimal('0.15')
+    True
+    >>> invoice_line.discount3 == Decimal('0.1')
+    True
