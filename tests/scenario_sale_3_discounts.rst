@@ -167,8 +167,8 @@ Sale 5 products::
     >>> sale_line.discount1 = Decimal('.5')
     >>> sale_line.discount2 = Decimal('.15')
     >>> sale_line.discount3 = Decimal('.1')
-    >>> sale_line.unit_price
-    Decimal('76.50000000')
+    >>> sale_line.unit_price == Decimal('76.50000000')
+    True
     >>> sale.save()
     >>> sale.reload()
 
