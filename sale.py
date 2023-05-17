@@ -37,17 +37,25 @@ class SaleLine(metaclass=PoolMeta):
     discount3 = fields.Numeric('Discount 3', digits=DISCOUNT_DIGITS,
         states=STATES, depends=DEPENDS)
 
-    @classmethod
-    def __setup__(cls):
-        super(SaleLine, cls).__setup__()
-        discounts = set(['discount1', 'discount2', 'discount3', 'sale'])
-        cls.amount.on_change_with |= discounts
-        cls.product.on_change |= discounts
-        cls.quantity.on_change |= discounts
-        cls.gross_unit_price.on_change |= discounts
-        cls.discount.on_change |= discounts
-        if hasattr(cls, 'package_quantity'):
-            cls.package_quantity.on_change |= discounts
+    @fields.depends('discount1', 'discount2', 'discount3', 'sale')
+    def on_change_product(self):
+        super().on_change_product()
+
+    @fields.depends('discount1', 'discount2', 'discount3', 'sale')
+    def on_change_quantity(self):
+        super().on_change_quantity()
+
+    @fields.depends('discount1', 'discount2', 'discount3', 'sale')
+    def on_change_gross_unit_price(self):
+        super().on_change_gross_unit_price()
+
+    @fields.depends('discount1', 'discount2', 'discount3', 'sale')
+    def on_change_discount(self):
+        super().on_change_discount()
+
+    @fields.depends('discount1', 'discount2', 'discount3', 'sale')
+    def on_change_with_amount(self):
+        return super().on_change_with_amount()
 
     @staticmethod
     def default_discount1():
