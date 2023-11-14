@@ -93,17 +93,20 @@ class SaleLine(metaclass=PoolMeta):
         super(SaleLine, self).update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3',
-        '_parent_sale.sale_discount', 'gross_unit_price', 'discount', 'sale')
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount', 'sale',
+        methods=['update_prices'])
     def on_change_discount1(self):
         self.update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3',
-        '_parent_sale.sale_discount', 'gross_unit_price', 'discount', 'sale')
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount', 'sale',
+        methods=['update_prices'])
     def on_change_discount2(self):
         self.update_prices()
 
     @fields.depends('discount1', 'discount2', 'discount3', 'sale',
-        '_parent_sale.sale_discount', 'gross_unit_price', 'discount')
+        '_parent_sale.sale_discount', 'gross_unit_price', 'discount',
+        methods=['update_prices'])
     def on_change_discount3(self):
         self.update_prices()
 
