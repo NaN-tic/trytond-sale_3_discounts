@@ -16,7 +16,6 @@ STATES = {
     'required': Eval('type') == 'line',
     'readonly': Eval('sale_state') != 'draft',
     }
-DEPENDS = ['type', 'sale_state']
 
 class Move(metaclass=PoolMeta):
     __name__ = 'stock.move'
@@ -31,11 +30,11 @@ class Move(metaclass=PoolMeta):
 class SaleLine(metaclass=PoolMeta):
     __name__ = 'sale.line'
     discount1 = fields.Numeric('Discount 1', digits=DISCOUNT_DIGITS,
-        states=STATES, depends=DEPENDS)
+        states=STATES)
     discount2 = fields.Numeric('Discount 2', digits=DISCOUNT_DIGITS,
-        states=STATES, depends=DEPENDS)
+        states=STATES)
     discount3 = fields.Numeric('Discount 3', digits=DISCOUNT_DIGITS,
-        states=STATES, depends=DEPENDS)
+        states=STATES)
 
     @fields.depends('discount1', 'discount2', 'discount3', 'sale')
     def on_change_product(self):
