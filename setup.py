@@ -5,17 +5,11 @@ from setuptools import setup
 import re
 import os
 import io
-try:
-    from configparser import ConfigParser
-except ImportError:
-    from configparser import ConfigParser
+from configparser import ConfigParser
 
 MODULE = 'sale_3_discounts'
 PREFIX = 'nantic'
-MODULE2PREFIX = {
-    'sale_discount': 'trytonspain',
-    'account_invoice_3_discounts': 'nantic',
-    }
+MODULE2PREFIX = {}
 
 
 def read(fname):
@@ -52,30 +46,21 @@ for dep in info.get('depends', []):
         requires.append(get_require_version('%s_%s' % (prefix, dep)))
 requires.append(get_require_version('trytond'))
 
-tests_require = [get_require_version('proteus')]
+tests_require = [
+    get_require_version('proteus'),
+]
+
 series = '%s.%s' % (major_version, minor_version)
 if minor_version % 2:
     branch = 'default'
 else:
     branch = series
-dependency_links = [
-    ('hg+https://bitbucket.org/trytonspain/'
-        'trytond-sale_discount@%(branch)s'
-        '#egg=trytonspain-sale_discount-%(series)s' % {
-            'branch': branch,
-            'series': series,
-            }),
-    ('hg+https://bitbucket.org/nantic/'
-        'trytond-account_invoice_3_discounts@%(branch)s'
-        '#egg=nantic-account_invoice_3_discounts-%(series)s' % {
-            'branch': branch,
-            'series': series,
-            }),
-    ]
+
+dependency_links = []
+
 if minor_version % 2:
     # Add development index for testing with proteus
     dependency_links.append('https://trydevpi.tryton.org/')
-
 
 setup(name='%s_%s' % (PREFIX, MODULE),
     version=version,
@@ -92,7 +77,7 @@ setup(name='%s_%s' % (PREFIX, MODULE),
         ],
     package_data={
         'trytond.modules.%s' % MODULE: (info.get('xml', [])
-            + ['tryton.cfg', 'view/*.xml', 'locale/*.po', 'tests/*.rst']),
+            + ['tryton.cfg', 'locale/*.po', 'tests/*.rst']),
         },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
